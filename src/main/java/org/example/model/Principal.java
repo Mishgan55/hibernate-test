@@ -6,53 +6,37 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.NamedQueries;
-import jakarta.persistence.NamedQuery;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
-import java.util.List;
-
 @Entity
-@Table(name = "director")
-@NamedQueries({
-        @NamedQuery(name = "Director.findAll", query = "select d from Director d")
-})
-public class Director {
-
+@Table(name = "principal")
+public class Principal {
+    @Column(name = "id")
     @Id
-    @Column(name="director_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int directorId;
-    @OneToMany(mappedBy = "owner",cascade = CascadeType.ALL)
-    private List<Movie> movies;
+    private int id;
     @Column(name = "name")
     private String name;
     @Column(name = "age")
     private int age;
+    @OneToOne(mappedBy = "principal", cascade = CascadeType.PERSIST)
+    private School school;
 
-    public Director() {
-    }
-
-    public Director( String name, int age) {
+    public Principal(String name, int age) {
         this.name = name;
         this.age = age;
     }
 
-    public int getDirectorId() {
-        return directorId;
+    public Principal() {
     }
 
-    public void setDirectorId(int directorId) {
-        this.directorId = directorId;
+    public int getId() {
+        return id;
     }
 
-    public List<Movie> getMovies() {
-        return movies;
-    }
-
-    public void setMovies(List<Movie> movies) {
-        this.movies = movies;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -71,12 +55,21 @@ public class Director {
         this.age = age;
     }
 
+    public School getSchool() {
+        return school;
+    }
+
+    public void setSchool(School school) {
+        this.school = school;
+    }
+
     @Override
     public String toString() {
-        return "Director{" +
-                "directorId=" + directorId +
+        return "Principal{" +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
+                ", school=" + school +
                 '}';
     }
 }

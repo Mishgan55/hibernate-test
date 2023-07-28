@@ -47,17 +47,11 @@ public class App {
 //            director.getMovies().add(movie);
 
             Director director = currentSession.get(Director.class, 3);
-
             List<Movie> movies = director.getMovies();
-
             for (Movie movie : movies) {
                 currentSession.remove(movie);
             }
-
             director.getMovies().clear();
-
-
-
 
             currentSession.getTransaction().commit();
         }finally {
